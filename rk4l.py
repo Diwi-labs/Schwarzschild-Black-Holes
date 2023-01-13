@@ -17,7 +17,7 @@ def extrapolate(U, U0, t, tn, condition):
 
                 y0 = y0 + (k1 + 2*k2 + 2*k3 + k4) * (tn/6)
 
-            if condition(y0, i) == False:
+            else:
                 break
 
     return results, domain

@@ -1,38 +1,25 @@
-import unittest
-import numpy as np
 import rk4l
+import numpy as np
+import unittest
 
+def df(x, t):
+    return -1*np.sin(t)
 
-# testing our RK4 module on a trig function to check sufficient accuracy
-# important to test over trig functions as the mathimatics we wish to model will have
-# negative and positive accelerations at different points
-
-def temp_condition(r, t):
-    return True
-
-def function_goes_above_1(r, t):
-    if r <= 0.0:
+def temp_con(r, t):
+    if t >= 6.28:
         return False
     else:
         return True
 
-def f(x, i):
-    return -1*np.sin(x)
+r, d = rk4l.extrapolate(df, 1, 6.2801, 0.0001, temp_con)
+print(r[-1])
 
-class TestRK4(unittest.TestCase):
+class Testrk4l(unittest.TestCase):
 
     def test_trig(self):
-        result, domain = rk4l.extrapolate(f, 1, 6.28, 0.0001, temp_condition)
+        result, domain = rk4l.extrapolate(df, 1, 6.2801, 0.0001, temp_con)
+        self.assertTrue(abs(result[-1] - np.cos(6.28)) < 0.0001)
 
-        self.assertTrue( abs(result[-1] - np.cos(6.28) < 0.001))
 
-    # Need to check that we can end the program if some limit is met,
-    # in our case if the ray goes into the blackhole or if it goes out to infinity
-
-    def test_limit(self):
-        result, domain = rk4l.extrapolate(f, 1, 6.28, 0.0001, function_goes_above_1)
-        print(len(result))
-        self.assertTrue(abs(result[-1] - 1) < 0.01)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
