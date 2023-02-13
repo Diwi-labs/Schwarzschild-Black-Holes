@@ -7,12 +7,13 @@ def extrapolate(U, U0, t, tn, condition):
     y0 = U0
 
     for i in domain:
+        # We use the condition to stop simulating if the ray fall into the black hole
             if condition(y0, i) == True:
                 results.append(y0)
 
                 k1 = U(y0, i)
                 k2 = U(y0 + k1 * tn / 2, i + tn / 2)
-                k3 = U(y0 + k2 *tn / 2, i + tn /2)
+                k3 = U(y0 + k2 * tn / 2, i + tn /2)
                 k4 = U(y0 + k3 * tn, i + tn)
 
                 y0 = y0 + (k1 + 2*k2 + 2*k3 + k4) * (tn/6)
