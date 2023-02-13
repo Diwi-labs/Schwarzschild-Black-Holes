@@ -1,18 +1,25 @@
 import numpy as np
+import rk4plus1
 
-#attempting to model x^3
+derive = [0.03]
+values = [0.1]
 
-dderiv = []
-derive = []
-
-def function_to_model(x, t):
+def fddash(x, t):
     return 6*x
 
 def fdash(x, t):
-    return dderiv[-1]
+    return 3*(x**2)
 
-domain = np.array(0, 5, 0.001)
-
+domain = np.arange(0.1, 3, 0.000001)
 
 for i in domain:
+    derive.append(rk4plus1.run(fddash, i, derive[-1], 0.000001))
+    values.append(rk4plus1.run(fdash, i, values[-1], 0.000001))
+
+
+print(values[-1])
+print(derive[0:10])
+
+
+
 
