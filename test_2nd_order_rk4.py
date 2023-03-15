@@ -5,7 +5,7 @@ derive = [0.03]
 values = [0.1]
 
 def fddash(x, t):
-    return 6*x
+    return 2
 
 def fdash(x, t):
     return 3*(x**2)
